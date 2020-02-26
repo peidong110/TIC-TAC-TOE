@@ -30,34 +30,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Button startButton;
     public boolean role;
     boolean p1Go;
-
-    String fuck;
-    //    public ArrayList<Integer> anOrder;
-//    public ArrayList<String>  location;
 //    public TextView player1;
 //    public TextView player2;
     public game boardGame;
     public String[] buttonInformation = {"-1","-1","-1","-1","-1","-1","-1","-1","-1"};
     public int[] saveColoredButtonX = {-1,-1,-1};
     public int[] saveColoredButtonY = {-1,-1,-1};
-//    public int[] aiBoard = new int[9];
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-//        for (int i = 0;i<9;i++){
-//            savedInstanceState.putInt("b"+i+"", buttonInformation[i]);
-//        }
-//        for (int i:anOrder){
-//            savedInstanceState.putInt("b"+i, anOrder.get(i));
-//            savedInstanceState.putString("l"+i,location.get(i));
-//
-//        }
-//        savedInstanceState.getParcelable("aList",anOrder);
-//        savedInstanceState.putStringArrayList("location",location);
-//        savedInstanceState.putIntegerArrayList("order",anOrder);
-//        System.out.println("1109 Order: "+anOrder+" location: "+location);
-//
         savedInstanceState.putString("1", buttonInformation[0]);
         savedInstanceState.putString("2", buttonInformation[1]);
         savedInstanceState.putString("3", buttonInformation[2]);
@@ -68,107 +49,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         savedInstanceState.putString("8", buttonInformation[7]);
         savedInstanceState.putString("9", buttonInformation[8]);
 
-        System.out.println("newA"+Arrays.toString(buttonInformation));
-
         savedInstanceState.putInt("cX1",saveColoredButtonX[0]);
         savedInstanceState.putInt("cX2",saveColoredButtonX[1]);
         savedInstanceState.putInt("cX3",saveColoredButtonX[2]);
         savedInstanceState.putInt("cY1",saveColoredButtonX[0]);
         savedInstanceState.putInt("cY2",saveColoredButtonX[1]);
         savedInstanceState.putInt("cY3",saveColoredButtonX[2]);
-
         for (int i =0;i< LENGTH;i++){
             savedInstanceState.putInt("cX"+i+"",saveColoredButtonX[i]);
             savedInstanceState.putInt("cY"+i+"",saveColoredButtonY[i]);
         }
 
-//        System.out.println("!!!!!!!X ARRAY"+Arrays.toString(saveColoredButtonX));
-//        System.out.println("!!!!!!!Y ARRAY"+Arrays.toString(saveColoredButtonY));
-
     }
 
-
-    //    @Override
-//    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-//        // Always call the superclass so it can save the view hierarchy state
-//        super.onSaveInstanceState(savedInstanceState);
-//        savedInstanceState.putInt("mark1", mark1);
-//        savedInstanceState.putInt("mark2", mark2);
-////        savedInstanceState.putInt("b1",buttonInformation[0]);
-////        for (int i = 0;i< 9;i++){
-////            savedInstanceState.putInt("b"+i, buttonInformation[i]);
-////            //save all information for all 9 buttons
-////        }
-//        savedInstanceState.putInt("b0", buttonInformation[0]);
-//        savedInstanceState.putInt("b1", buttonInformation[1]);
-//        savedInstanceState.putInt("b2", buttonInformation[2]);
-//        savedInstanceState.putInt("b3", buttonInformation[3]);
-//        savedInstanceState.putInt("b4", buttonInformation[4]);
-//        savedInstanceState.putInt("b5", buttonInformation[5]);
-//        savedInstanceState.putInt("b6", buttonInformation[6]);
-//        savedInstanceState.putInt("b7", buttonInformation[7]);
-//        savedInstanceState.putInt("b8", buttonInformation[8]);
-////        for (int i = 0;i< 9;i++){
-////            if (buttonInformation[i] == 1|| buttonInformation[i] == 2){
-//////                screenRotationPlay(i);
-////                System.out.println("Key Board Pressed",buttonInformation);
-////            }
-////        }
-//        savedInstanceState.putInt("x0", saveColoredButtonX[0]);
-//        savedInstanceState.putInt("y0", saveColoredButtonY[0]);
-//        savedInstanceState.putInt("x1", saveColoredButtonX[1]);
-//        savedInstanceState.putInt("y1", saveColoredButtonY[1]);
-//        savedInstanceState.putInt("x2", saveColoredButtonX[2]);
-//        savedInstanceState.putInt("y2", saveColoredButtonY[2]);
-//        Log.i(TAG, "onSaveInstanceState(Bundle)");
-//    }
-//    public void change(int x,Button b,int xCord,int yCord){
-//        if (x != 0){
-//            if (x == 1){
-//                b.setText("x");
-//
-//            }
-//            else
-//                b.setText("o");
-//        }
-//    }
-//
-//    public void setRotationPlay(){
-//        for (int i = 0;i< 9;i++){
-//            if(buttonInformation[i] != "-1"){
-//                screenRotationPlay(i);
-//            }
-//        }
-//    }
-//    public void screenRotationPlay(int token){
-//        if (token == 0){
-//            putKeys(buttons[0][0],0,0);
-//        }
-//        if (token == 1){
-//            putKeys(buttons[0][1],0,1);
-//        }
-//        if(token == 2){
-//            putKeys(buttons[0][2],0,2);
-//        }
-//        if (token == 3){
-//            putKeys(buttons[1][0],1,0);
-//        }
-//        if (token == 4){
-//            putKeys(buttons[1][1],1,1);
-//        }
-//        if (token == 5){
-//            putKeys(buttons[1][2],1,2);
-//        }
-//        if (token == 6){
-//            putKeys(buttons[2][0],2,0);
-//        }
-//        if (token == 7){
-//            putKeys(buttons[2][1],2,1);
-//        }
-//        if (token == 8){
-//            putKeys(buttons[2][2],2,2);
-//        }
-//    }
     public void resetColor(){
         for (int i =0;i< 3;i++){
             saveColoredButtonY[i] = -1;
@@ -200,23 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     putKeys(buttons[x][y],x,y,str);
                 }
             }
-//            System.out.println("newA"+Arrays.toString(buttonInformation));
-//            for (int i = 0; i< 9;i++){
-//                if (!buttonInformation[i].equals("-1")){
-//                    int x = Integer.parseInt(buttonInformation[i].substring(0,1));
-//                    int y = Integer.parseInt(buttonInformation[i].substring(1,2));
-//                    putKeys(buttons[x][y],x,y);
-//                    putKeys(buttons[0][0],0,0);
-//                    putKeys(buttons[0][1],0,1);
-//                    putKeys(buttons[0][2],0,2);
-//                    putKeys(buttons[1][0],1,0);
-//                    putKeys(buttons[1][1],1,1);
-//                    putKeys(buttons[1][2],1,2);
-//                    putKeys(buttons[2][0],2,0);
-//                    putKeys(buttons[2][1],2,1);
-//                    putKeys(buttons[2][2],2,2);
-//                }
-//            }
+
 
             System.out.println("099"+Arrays.toString(buttonInformation));
 
@@ -228,108 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             saveColoredButtonY[2] = savedInstanceState.getInt("cY3");
 
 
-//            anOrder =savedInstanceState.getIntegerArrayList("order");
-//            location = savedInstanceState.getStringArrayList("location");
-//            System.out.println("1109"+anOrder+"location"+location);
-//            int x_co[] = new int[anOrder.size()];
-//            int y_co[] = new int[anOrder.size()];
-
-//            for (int si = 0;si < anOrder.size();si++){
-//                x_co[si] = Character.getNumericValue(location.get(si).charAt(0));
-//                y_co[si] = Character.getNumericValue(location.get(si).charAt(1));
-////                System.out.println("1109 "+Character.getNumericValue(location.get(a).charAt(0)));
-//                System.out.println("1109 a:"+x_co[si]+"b:"+y_co[si]);
-//            }
-//            for (int z = 0;z < anOrder.size();z++){
-//                int play = boardGame.play(x_co[z],y_co[z]);
-//                //if this button is empty then we can put keys here.
-//                buttons[x_co[z]][y_co[z]].setText(xOrY(play));
-////                putKeys(buttons[x_co[z]][y_co[z]],x_co[z],y_co[z]);
-//            }
-
-
-//            for (int i:anOrder){
-//                savedInstanceState.getInt("b"+i);
-//                savedInstanceState.getString("l"+i);
-//                int loc_x = Character.getNumericValue(location.get(i).charAt(0));
-//                int loc_y = Character.getNumericValue(location.get(i).charAt(1));
-//                Button btn = buttons[loc_x][loc_y];
-//            }
-
-//            for (int a : anOrder){
-//                int loc_x = Character.getNumericValue(location.get(a).charAt(0));
-//                int loc_y = Character.getNumericValue(location.get(a).charAt(1));
-//                Button btn = buttons[loc_x][loc_y];
-//                putKeys(btn,loc_x,loc_y);
-//
-//            }
 
 
 
             System.out.println("& ARRAY"+Arrays.toString(buttonInformation));
-
             System.out.println("Win"+boardGame.isGameOver());
-//            for (int z = 0; z<LENGTH;z++){
-//                System.out.println("x: " +saveColoredButtonX[z]+"y: "+saveColoredButtonY[z]);
-//                if (boardGame.isGameOver()){
-//                    saveColoredButtonX[z] = savedInstanceState.getInt("cX"+z+"");
-//                    saveColoredButtonY[z] = savedInstanceState.getInt("cY"+z+"");
-//                    buttons[saveColoredButtonX[z]][saveColoredButtonY[z]].setBackgroundColor(Color.YELLOW);
-//                }
-//            }
-
-//
-//            System.out.println("X ARRAY"+Arrays.toString(saveColoredButtonX));
-//            System.out.println("Y ARRAY"+Arrays.toString(saveColoredButtonY));
-
-//            for (int z = 0; z<LENGTH;z++){
-//                System.out.println("x: " +saveColoredButtonX[z]+"y: "+saveColoredButtonY[z]);
-//                if (saveColoredButtonX[z] != -0 && saveColoredButtonY[z] != -1){
-//                    saveColoredButtonX[z] = savedInstanceState.getInt("cX"+z+"");
-//                    saveColoredButtonY[z] = savedInstanceState.getInt("cY"+z+"");
-//                    buttons[saveColoredButtonX[z]][saveColoredButtonY[z]].setBackgroundColor(Color.YELLOW);
-//                }
-//            }
-
-//            for (int j = 0;j<9;j++){
-//                if (buttonInformation[j] == 1 || buttonInformation[j] ==2){
-//                    screenRotationPlay(j);
-//                }
-//            }
-//            if (buttonInformation[0]!= 0)
-//                screenRotationPlay(0);
-//            if (buttonInformation[1]!= 0)
-//                screenRotationPlay(1);
-//            if (buttonInformation[2]!= 0)
-//                screenRotationPlay(2);
-//            if (buttonInformation[3]!= 0)
-//                screenRotationPlay(3);
-//            if (buttonInformation[4]!= 0)
-//                screenRotationPlay(4);
-//            if (buttonInformation[5]!= 0)
-//                screenRotationPlay(5);
-//            if (buttonInformation[6]!= 0)
-//                screenRotationPlay(6);
-//            if (buttonInformation[7]!= 0)
-//                screenRotationPlay(7);
-//            if (buttonInformation[8]!= 0)
-//                screenRotationPlay(8);
-//
-//            for (int i =0;i<9;i++){
-//                if (buttonInformation[i] != 0){
-//                    screenRotationPlay(i);
-//                }
-//            }
-//            System.out.println("!!!!!!"+Arrays.toString(buttonInformation));
 
         }
-//        for (int z = 0; z<LENGTH;z++){
-//            System.out.println("x: " +saveColoredButtonX[z]+"y: "+saveColoredButtonY[z]);
-//            if (saveColoredButtonX[z] != -0 && saveColoredButtonY[z] != -1){
-//                buttons[saveColoredButtonX[z]][saveColoredButtonY[z]].setBackgroundColor(Color.YELLOW);
-//
-//            }
-//        }
+
         resetButton.setOnClickListener(v ->
         {
             Log.i(TAG, "Reset Button Clicked");
@@ -358,37 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //start only reset game but not reset marks
         });
     }
-    public int returnPad(String a,String b){
-        int pad = -1;
-        if (a.equals("0") && b.equals("0")){
-            pad = 0;
-        }
-        else if (a.equals("0") && b.equals("1")){
-            pad = 1;
-        }
-        else if (a.equals("0") && b.equals("2")){
-            pad = 2;
-        }
-        else if (a.equals("1") && b.equals("0")){
-            pad = 3;
-        }
-        else if (a.equals("1") && b.equals("1")){
-            pad = 4;
-        }
-        else if (a.equals("1") && b.equals("2")){
-            pad = 5;
-        }
-        else if (a.equals("2") && b.equals("0")){
-            pad = 6;
-        }
-        else if (a.equals("2") && b.equals("1")){
-            pad = 7;
-        }
-        else if (a.equals("2") && b.equals("2")){
-            pad = 8;
-        }
-        return pad;
-    }
+
     public void resetPadMatrix(){
         for (int i = 0;i< 9;i++){
             buttonInformation[i] = "-1";
@@ -399,8 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boardGame = new game();
 //        role = false;
         p1Go = true;
-//        anOrder = new ArrayList<>();
-//        location = new ArrayList<>();
+
 //        mark1 = 0;
 //        mark2 = 0;
         resetButton = findViewById(R.id.resetButton);
@@ -499,48 +251,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         putKeys(buttons[0][0],0,0,'o');
                         p1Go = true;
                     }
-                    //if player1's role
-//                    aiPlace();
                     break;
                 }
                 case R.id.button01:{
                     Log.d(TAG, "01 onClick: ");
                     if (p1Go){
                         putKeys(buttons[0][1],0,1,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[0][1],0,1,'o');
-//                        p1Go = true;
-                    }//                    role = true;
+                    }
 
-//                    aiPlace();
                     break;
                 }
                 case R.id.button02:{
                     Log.d(TAG, "02 onClick: ");
                     if (p1Go){
                         putKeys(buttons[0][2],0,2,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[0][2],0,2,'o');
-//                        p1Go = true;
-                    }//                    role = true;
-//                    aiPlace();
+                    }
                     break;
                 }
                 case R.id.button10:{
                     Log.d(TAG, "10 onClick: ");
                     if (p1Go){
                         putKeys(buttons[1][0],1,0,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[1][0],1,0,'o');
-//                        p1Go = true;
-                    }//                    role = true;
-//                    aiPlace();
+                    }
 
                     break;
                 }
@@ -548,13 +289,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "11 onClick: ");
                     if (p1Go){
                         putKeys(buttons[1][1],1,1,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[1][1],1,1,'o');
-//                        p1Go = true;
-                    }//                    role = true;
-//                    aiPlace();
+                    }
                     break;
                 }
                 case R.id.button12:{
@@ -562,13 +300,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "12 onClick: ");
                     if (p1Go){
                         putKeys(buttons[1][2],1,2,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[1][2],1,2,'o');
-//                        p1Go = true;
-                    }//                    role = true;
-//                    aiPlace();
+                    }
 
                     break;
                 }
@@ -576,13 +311,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "20 onClick: ");
                     if (p1Go){
                         putKeys(buttons[2][0],2,0,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[2][0],2,0,'o');
-//                        p1Go = true;
-                    }//                    role = true;
-//                    aiPlace();
+                    }
 
                     break;
                 }
@@ -590,13 +322,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "21 onClick: ");
                     if (p1Go){
                         putKeys(buttons[2][1],2,1,'x');
-//                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[2][1],2,1,'o');
-//                        p1Go = true;
-                    }//                    role = true;
-//                    aiPlace();
+                    }
 
                     break;
                 }
@@ -604,13 +333,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG, "22 onClick: ");
                     if (p1Go){
                         putKeys(buttons[2][2],2,2,'x');
-//                        p1Go = !p1Go;
                     }
-                    else{
-                        putKeys(buttons[2][2],2,2,'o');
-//                        p1Go = !p1Go;
-                    }//                    role = true;
-//                    aiPlace();
+                    else {
+                        putKeys(buttons[2][2], 2, 2, 'o');
+                    }
 
                     break;
                 }
@@ -628,11 +354,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.play(cordX,cordY,x);
             //if this button is empty then we can put keys here.
             b.setText(String.valueOf(x));
-//            role = !role;
-//            anOrder.add(play);
+
             String newA =  cordX+""+cordY+""+x;
             System.out.println("newA"+newA+"pad Value"+getPadValue(cordX,cordY));
-//            location.add(newA);
             buttonInformation[getPadValue(cordX,cordY)] = newA;
             p1Go = !p1Go;
         }
