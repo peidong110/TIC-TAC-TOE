@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String[] buttonInformation = {"-1","-1","-1","-1","-1","-1","-1","-1","-1"};
     public int[] saveColoredButtonX = {-1,-1,-1};
     public int[] saveColoredButtonY = {-1,-1,-1};
+    public String[] winningPattern = {"-1","-1","-1"};
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -49,26 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         savedInstanceState.putString("8", buttonInformation[7]);
         savedInstanceState.putString("9", buttonInformation[8]);
 
-        savedInstanceState.putInt("cX1",saveColoredButtonX[0]);
-        savedInstanceState.putInt("cX2",saveColoredButtonX[1]);
-        savedInstanceState.putInt("cX3",saveColoredButtonX[2]);
-        savedInstanceState.putInt("cY1",saveColoredButtonX[0]);
-        savedInstanceState.putInt("cY2",saveColoredButtonX[1]);
-        savedInstanceState.putInt("cY3",saveColoredButtonX[2]);
-        for (int i =0;i< LENGTH;i++){
-            savedInstanceState.putInt("cX"+i+"",saveColoredButtonX[i]);
-            savedInstanceState.putInt("cY"+i+"",saveColoredButtonY[i]);
-        }
+        savedInstanceState.putString("First",winningPattern[0]);
+        savedInstanceState.putString("Second",winningPattern[1]);
+        savedInstanceState.putString("Third",winningPattern[2]);
+
 
     }
-
-    public void resetColor(){
-        for (int i =0;i< 3;i++){
-            saveColoredButtonY[i] = -1;
-            saveColoredButtonX[i] = -1;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,60 +72,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             buttonInformation[7] = savedInstanceState.getString("8");
             buttonInformation[8] = savedInstanceState.getString("9");
             System.out.println("DKK"+Arrays.toString(buttonInformation));
-            for (int i = 0;i < 9;i++){
-                if (!buttonInformation[i].equals("-1")){
-                    int x = Integer.parseInt(buttonInformation[i].substring(0,1));
-                    int y = Integer.parseInt(buttonInformation[i].substring(1,2));
+            winningPattern[0] = savedInstanceState.getString("First");
+            winningPattern[1] = savedInstanceState.getString("Second");
+            winningPattern[2] = savedInstanceState.getString("Third");
+            System.out.println("-Win"+Arrays.toString(winningPattern));
+
+
+            for (int i = 0;i < 9;i++) {
+                if (!buttonInformation[i].equals("-1")) {
+                    int x = Integer.parseInt(buttonInformation[i].substring(0, 1));
+                    int y = Integer.parseInt(buttonInformation[i].substring(1, 2));
                     char str = buttonInformation[i].charAt(2);
-                    putKeys(buttons[x][y],x,y,str);
+                    putKeys(buttons[x][y], x, y, str);
                 }
             }
-
-
-            System.out.println("099"+Arrays.toString(buttonInformation));
-
-            saveColoredButtonX[0] = savedInstanceState.getInt("cX1");
-            saveColoredButtonX[1] = savedInstanceState.getInt("cX2");
-            saveColoredButtonX[2] = savedInstanceState.getInt("cX3");
-            saveColoredButtonY[0] = savedInstanceState.getInt("cY1");
-            saveColoredButtonY[1] = savedInstanceState.getInt("cY2");
-            saveColoredButtonY[2] = savedInstanceState.getInt("cY3");
-
-
-
-
-
-            System.out.println("& ARRAY"+Arrays.toString(buttonInformation));
-            System.out.println("Win"+boardGame.isGameOver());
-
+            if (boardGame.won()>0){
+                for (int i = 0;i< 3;i++){
+                    int x_cord = Integer.parseInt(winningPattern[i].substring(0,1));
+                    int y_cord = Integer.parseInt(winningPattern[i].substring(1,2));
+                    buttons[x_cord][y_cord].setBackgroundColor(Color.YELLOW);
+                }
+            }
+//            saveColoredButtonX[0] = savedInstanceState.getInt("cX1");
+//            saveColoredButtonX[1] = savedInstanceState.getInt("cX2");
+//            saveColoredButtonX[2] = savedInstanceState.getInt("cX3");
+//            saveColoredButtonY[0] = savedInstanceState.getInt("cY1");
+//            saveColoredButtonY[1] = savedInstanceState.getInt("cY2");
+//            saveColoredButtonY[2] = savedInstanceState.getInt("cY3");
         }
-
         resetButton.setOnClickListener(v ->
         {
             Log.i(TAG, "Reset Button Clicked");
             resetLayoutBoard();
             boardGame.reset();
             boardGame.clear();
-//            resetColor();
             resetPadMatrix();
             role = false;
-
-//            mark1 = 0;
-//            mark2 = 0;
-//            player1.setText("0");
-//            player2.setText("0");
-            //reset mark => same functionality with start
         });
         startButton.setOnClickListener(v->
         {
             resetLayoutBoard();
             boardGame.reset();
             boardGame.clear();
-//            resetColor();
             resetPadMatrix();
             role = false;
             Log.i(TAG, "Start Button Clicked");
-            //start only reset game but not reset marks
         });
     }
 
@@ -150,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void revoke() {
         boardGame = new game();
-//        role = false;
         p1Go = true;
 
 //        mark1 = 0;
@@ -187,16 +164,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 buttons[i][j].setBackgroundResource(android.R.drawable.btn_default);
             }
         }
-//        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setText("");
-//        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setText("");
-//        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setText("");
-//        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setBackgroundResource(android.R.drawable.btn_default);
-//        buttons[saveColoredButtonX[1]][saveColoredButtonY[1]].setBackgroundResource(android.R.drawable.btn_default);
-//        buttons[saveColoredButtonX[2]][saveColoredButtonY[2]].setBackgroundResource(android.R.drawable.btn_default);
     }
-
-
-
+    public void generateButton(){
+        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setText("");
+        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setText("");
+        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setText("");
+        buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].setBackgroundResource(android.R.drawable.btn_default);
+        buttons[saveColoredButtonX[1]][saveColoredButtonY[1]].setBackgroundResource(android.R.drawable.btn_default);
+        buttons[saveColoredButtonX[2]][saveColoredButtonY[2]].setBackgroundResource(android.R.drawable.btn_default);
+    }
     public void color(){
         if (boardGame.won()> 0){
             Log.d(TAG, "WINNING");
@@ -204,16 +180,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0;i < 3;i++){
                 saveColoredButtonX[i] = Character.getNumericValue(arr[i].charAt(0));
                 saveColoredButtonY[i] = Character.getNumericValue(arr[i].charAt(1));
+                winningPattern[i] = arr[i];
                 buttons[saveColoredButtonX[i]][saveColoredButtonY[i]].setBackgroundColor(Color.YELLOW);
             }
             System.out.println("& ARRAY"+Arrays.toString(buttonInformation));
             System.out.println("Winning! Matrix is"+Arrays.toString(arr));
         }
-        else
-        {
             Log.d(TAG, "NOT WINNING");
-
-        }
     }
 //    public void aiPlace(){
 //        if (!boardGame.isGameOver() && role) {
@@ -347,14 +320,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("Game is over!");
             boardGame.printBoard(boardGame.gameBoard);
         }
-
     }
     public void putKeys(Button b,int cordX, int cordY,char x){
         if (b.getText().toString().equals("")){
             boardGame.play(cordX,cordY,x);
             //if this button is empty then we can put keys here.
             b.setText(String.valueOf(x));
-
             String newA =  cordX+""+cordY+""+x;
             System.out.println("newA"+newA+"pad Value"+getPadValue(cordX,cordY));
             buttonInformation[getPadValue(cordX,cordY)] = newA;
@@ -370,7 +341,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return "o";
     }
 
-
     public int[] randomPlace(){
         int[] rc = new int[2];
         int r = (int)(Math.random()*3);
@@ -383,7 +353,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rc[1] = c;
         return rc;
     }
-
     public int getPadValue(int x, int y){
         int a = -1;
         if (x== 0 && y == 0){
