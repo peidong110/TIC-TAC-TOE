@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Button[][] buttons = new Button[LENGTH][LENGTH];
     public Button resetButton;
     public Button startButton;
-    public boolean role;
-    boolean p1Go;
+    public boolean flag;
 //    public TextView player1;
 //    public TextView player2;
     public game boardGame;
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.reset();
             boardGame.clear();
             resetPadMatrix();
-            role = false;
+//            role = false;
         });
         startButton.setOnClickListener(v->
         {
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.reset();
             boardGame.clear();
             resetPadMatrix();
-            role = false;
+//            role = false;
             Log.i(TAG, "Start Button Clicked");
         });
     }
@@ -128,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void revoke() {
         boardGame = new game();
-        p1Go = true;
+//        p1Go = true;
+        flag = true;
 
 //        mark1 = 0;
 //        mark2 = 0;
@@ -209,26 +209,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!((Button)view).getText().toString().equals(""))
             return;
         System.out.println("Is Game over?: "+boardGame.isGameOver());
-        System.out.println("FLG :"+p1Go);
+//        System.out.println("FLG :"+p1Go);
 
         if (!boardGame.isGameOver())
         {
             switch (view.getId()) {
                 case R.id.button00:{
                     Log.d(TAG, "00 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[0][0],0,0,'x');
-                        p1Go = false;
                     }
                     else{
                         putKeys(buttons[0][0],0,0,'o');
-                        p1Go = true;
                     }
                     break;
                 }
                 case R.id.button01:{
                     Log.d(TAG, "01 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[0][1],0,1,'x');
                     }
                     else{
@@ -239,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 case R.id.button02:{
                     Log.d(TAG, "02 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[0][2],0,2,'x');
                     }
                     else{
@@ -249,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 case R.id.button10:{
                     Log.d(TAG, "10 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[1][0],1,0,'x');
                     }
                     else{
@@ -260,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 case R.id.button11:{
                     Log.d(TAG, "11 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[1][1],1,1,'x');
                     }
                     else{
@@ -271,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case R.id.button12:{
 
                     Log.d(TAG, "12 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[1][2],1,2,'x');
                     }
                     else{
@@ -282,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 case R.id.button20:{
                     Log.d(TAG, "20 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[2][0],2,0,'x');
                     }
                     else{
@@ -293,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 case R.id.button21:{
                     Log.d(TAG, "21 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[2][1],2,1,'x');
                     }
                     else{
@@ -304,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 case R.id.button22: {
                     Log.d(TAG, "22 onClick: ");
-                    if (p1Go){
+                    if (flag){
                         putKeys(buttons[2][2],2,2,'x');
                     }
                     else {
@@ -329,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String newA =  cordX+""+cordY+""+x;
             System.out.println("newA"+newA+"pad Value"+getPadValue(cordX,cordY));
             buttonInformation[getPadValue(cordX,cordY)] = newA;
-            p1Go = !p1Go;
+            flag = !flag;
         }
         else
             System.out.println("Can not place key here");
