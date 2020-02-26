@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">tictactoe</string>
+    <string name="player1">Player1:</string>
+    <string name="player2">Player2:</string>
+    <string name="reset">RESET GAME</string>
+    <string name="original_mark">0</string>
+    <string name="start1">START</string>
+</resources>
