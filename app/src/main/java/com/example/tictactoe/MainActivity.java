@@ -106,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.reset();
             boardGame.clear();
             resetPadMatrix();
+            if (round == 1){
+                round = 2;
+            }
+            else if (round == 2)
+            {
+                round = 1;
+            }
             System.out.println("1189++"+lastClick+"");
             changeFlag(lastClick.charAt(2));
 //            role = false;
@@ -116,6 +123,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.reset();
             boardGame.clear();
             resetPadMatrix();
+            if (round == 1){
+                round = 2;
+            }
+            else if (round == 2)
+            {
+
+                round = 1;
+            }
 //            role = false;
             Log.i(TAG, "Start Button Clicked");
         });
@@ -223,119 +238,241 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (!boardGame.isGameOver())
         {
+            System.out.println("ROUND :" + round);
             switch (view.getId()) {
                 case R.id.button00:{
                     Log.d(TAG, "00 onClick: ");
-                    if (flag){
-                        putKeys(buttons[0][0],0,0,'x');
-                        aiPlace('o');
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[0][0],0,0,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[0][0],0,0,'o');
+                            aiPlace('x');
+                        }
                     }
-                    else{
-                        putKeys(buttons[0][0],0,0,'o');
-                        aiPlace('x');
-                    }
+//                    else  if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//                            putKeys(buttons[0][0],0,0,'x');
+//                        }
+//                        else
+//                        {
+//                            aiPlace('x');
+//                            putKeys(buttons[0][0],0,0,'o');
+//
+//                        }
+//                    }
                     break;
                 }
                 case R.id.button01:{
                     Log.d(TAG, "01 onClick: ");
-                    if (flag){
-                        putKeys(buttons[0][1],0,1,'x');
-                        aiPlace('o');
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[0][1],0,1,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[0][1],0,1,'o');
+                            aiPlace('x');
+                        }
                     }
-                    else{
-                        putKeys(buttons[0][1],0,1,'o');
-                        aiPlace('x');
-                    }
+//                    else{
+//                        if (flag){
+//                            aiPlace('o');
+//                            putKeys(buttons[0][1],0,1,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//                            putKeys(buttons[0][1],0,1,'o');
+//
+//                        }
+//                    }
 
                     break;
                 }
                 case R.id.button02:{
                     Log.d(TAG, "02 onClick: ");
-                    if (flag){
-                        putKeys(buttons[0][2],0,2,'x');
-                        aiPlace('o');
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[0][2],0,2,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[0][2],0,2,'o');
+                            aiPlace('x');
+                        }
                     }
-                    else{
-                        putKeys(buttons[0][2],0,2,'o');
-                        aiPlace('x');
-                    }
+//                    else if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//
+//                            putKeys(buttons[0][2],0,2,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//                            putKeys(buttons[0][2],0,2,'o');
+//                        }
+//                    }
                     break;
                 }
                 case R.id.button10:{
                     Log.d(TAG, "10 onClick: ");
-                    if (flag){
-                        putKeys(buttons[1][0],1,0,'x');
-                        aiPlace('o');
-                    }
-                    else{
-                        putKeys(buttons[1][0],1,0,'o');
-                        aiPlace('x');
-                    }
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[1][0],1,0,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[1][0],1,0,'o');
+                            aiPlace('x');
+                        }
 
+                    }
+//                    else if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//                            putKeys(buttons[1][0],1,0,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//                            putKeys(buttons[1][0],1,0,'o');
+//
+//                        }
+//
+//                    }
                     break;
                 }
                 case R.id.button11:{
                     Log.d(TAG, "11 onClick: ");
-                    if (flag){
-                        putKeys(buttons[1][1],1,1,'x');
-                        aiPlace('o');
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[1][1],1,1,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[1][1],1,1,'o');
+                            aiPlace('x');
+                        }
                     }
-                    else{
-                        putKeys(buttons[1][1],1,1,'o');
-                        aiPlace('x');
-                    }
+//                    else if (round ==2){
+//                        if (flag){
+//                            aiPlace('o');
+//
+//                            putKeys(buttons[1][1],1,1,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//                            putKeys(buttons[1][1],1,1,'o');
+//                        }
+//                    }
                     break;
                 }
                 case R.id.button12:{
 
                     Log.d(TAG, "12 onClick: ");
-                    if (flag){
-                        putKeys(buttons[1][2],1,2,'x');
-                        aiPlace('o');
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[1][2],1,2,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[1][2],1,2,'o');
+                            aiPlace('x');
+                        }
                     }
-                    else{
-                        putKeys(buttons[1][2],1,2,'o');
-                        aiPlace('x');
-                    }
+//                    else if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//                            putKeys(buttons[1][2],1,2,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//
+//                            putKeys(buttons[1][2],1,2,'o');
+//                        }
+//                    }
 
                     break;
                 }
                 case R.id.button20:{
                     Log.d(TAG, "20 onClick: ");
-                    if (flag){
-                        putKeys(buttons[2][0],2,0,'x');
-                        aiPlace('o');
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[2][0],2,0,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[2][0],2,0,'o');
+                            aiPlace('x');
+                        }
                     }
-                    else{
-                        putKeys(buttons[2][0],2,0,'o');
-                        aiPlace('x');
-                    }
+//                    else if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//
+//                            putKeys(buttons[2][0],2,0,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//                            putKeys(buttons[2][0],2,0,'o');
+//                        }
+//                    }
 
                     break;
                 }
                 case R.id.button21:{
                     Log.d(TAG, "21 onClick: ");
-                    if (flag){
-                        putKeys(buttons[2][1],2,1,'x');
-                        aiPlace('o');
-                    }
-                    else{
-                        putKeys(buttons[2][1],2,1,'o');
-                        aiPlace('x');
-                    }
+                    if (round == 1){
+                        if (flag){
+                            putKeys(buttons[2][1],2,1,'x');
+                            aiPlace('o');
+                        }
+                        else{
+                            putKeys(buttons[2][1],2,1,'o');
+                            aiPlace('x');
+                        }
 
+                    }
+//                    else if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//
+//                            putKeys(buttons[2][1],2,1,'x');
+//                        }
+//                        else{
+//                            aiPlace('x');
+//
+//                            putKeys(buttons[2][1],2,1,'o');
+//                        }
+//
+//                    }
                     break;
                 }
                 case R.id.button22: {
                     Log.d(TAG, "22 onClick: ");
-                    if (flag){
-                        putKeys(buttons[2][2],2,2,'x');
-                        aiPlace('o');
+                    if (round ==1){
+                        if (flag){
+                            putKeys(buttons[2][2],2,2,'x');
+                            aiPlace('o');
+                        }
+                        else {
+                            putKeys(buttons[2][2], 2, 2, 'o');
+                            aiPlace('x');
+                        }
                     }
-                    else {
-                        putKeys(buttons[2][2], 2, 2, 'o');
-                        aiPlace('x');
-                    }
+//                    else if (round == 2){
+//                        if (flag){
+//                            aiPlace('o');
+//
+//                            putKeys(buttons[2][2],2,2,'x');
+//                        }
+//                        else {
+//                            aiPlace('x');
+//                            putKeys(buttons[2][2], 2, 2, 'o');
+//                        }
+//                    }
                     break;
                 }
             }
