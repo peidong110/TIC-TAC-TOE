@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class game {
     public static final int LENGTH = 3;//board will be a 3 X 3 Board
     private int turn;//false for player1 and true for player 2
-    private int [][] board;//a 3 by 3 board will be generated when calling constructor
+    public int [][] board;//a 3 by 3 board will be generated when calling constructor
     char[][] gameBoard ={
             {' ','|',' ','|',' '},
             {'-','+','-','+','-'},
@@ -15,7 +15,7 @@ public class game {
             {'-','+','-','+','-'},
             {' ','|',' ','|',' '}};
 
-    String[] arr = {"x","x","x"};
+    public String[] arr = {"x","x","x"};
     public int getTurn() {
         return turn;
     }
@@ -33,7 +33,7 @@ public class game {
     }
     public void play(int row, int column,char token){
         int currentTurn = turn;//know which player is playing right now
-        if(column >= 0 && row >= 0 &&column < LENGTH && row < LENGTH && board[row][column] == 0) //checking if # passed in is a valid number, and place is a valid place
+        if(column >= 0 && row >= 0 &&column < LENGTH && row < LENGTH && board[row][column] == 0 &&!isGameOver()) //checking if # passed in is a valid number, and place is a valid place
         {
             //if yes, then it means we can put value in 2d array
             board[row][column] = turn;
@@ -46,13 +46,12 @@ public class game {
                 board[row][column] = returnToken(token);
 
             }
-
         }
         else
         {
-            System.out.println("Error");
-
+            System.out.println("Game Terminates");
         }
+
     }
     public int won(){
         int rows = checkRows();

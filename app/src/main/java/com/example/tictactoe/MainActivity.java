@@ -20,6 +20,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "TicTacToeMainActivity";
@@ -221,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int x = ranCor[0];
             int y = ranCor[1];
             putKeys(buttons[x][y], x, y, token);
-            Log.d(TAG, "AI JUST PLACED A KEY AT x:"+x+"y:"+y);
+            Log.d(TAG, "AI JUST PLACED A KEY AT x: "+x+" y: "+y);
         }
         else
         {
@@ -234,12 +235,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.LENGTH_LONG).show();
         }
     }
-
+    public void move(){
+        for (int i = 0;i<5;i++){
+            String row = "";
+            for (int j =0;j<5;j++){
+                row += boardGame.gameBoard[i][j];
+            }
+            Log.d(TAG, row);
+            System.out.println(row);
+        }
+    }
     @Override
     public void onClick(View view){
         if (!((Button)view).getText().toString().equals(""))
             return;
-        System.out.println("Is Game over?: "+boardGame.isGameOver());
+        Log.d(TAG,"IS game over? "+boardGame.isGameOver());
+
+
         if (!boardGame.isGameOver())
         {
             System.out.println("ROUND :" + round);
@@ -255,10 +267,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
-
+                    move();
                     break;
                 }
                 case R.id.button01:{
+
                     Log.d(TAG, "01 onClick: ");
                         if (flag){
                             putKeys(buttons[0][1],0,1,'x');
@@ -269,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
-
+                        move();
                     break;
                 }
                 case R.id.button02:{
@@ -283,6 +296,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
@@ -297,6 +311,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
@@ -311,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
@@ -326,6 +342,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
@@ -340,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
@@ -354,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
@@ -369,6 +388,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             aiPlace('x');
                         }
                     checkOver();
+                        move();
 
                     break;
                 }
