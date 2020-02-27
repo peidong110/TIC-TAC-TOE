@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -22,16 +23,16 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "TicTacToeMainActivity";
-    //    private int mark1;
-//    private int mark2;
+    private int mark1;
+    private int mark2;
     public  static final int LENGTH = 3;
     public Button[][] buttons = new Button[LENGTH][LENGTH];
     public Button resetButton;
     public Button startButton;
     public boolean flag;
     public int round = 1;
-//    public TextView player1;
-//    public TextView player2;
+    public TextView playerX;
+    public TextView playerO;
     public String lastClick;
     public game boardGame;
     public String[] buttonInformation = {"-1","-1","-1","-1","-1","-1","-1","-1","-1"};
@@ -50,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         savedInstanceState.putString("7", buttonInformation[6]);
         savedInstanceState.putString("8", buttonInformation[7]);
         savedInstanceState.putString("9", buttonInformation[8]);
-
         savedInstanceState.putString("First",winningPattern[0]);
         savedInstanceState.putString("Second",winningPattern[1]);
         savedInstanceState.putString("Third",winningPattern[2]);
-
+        savedInstanceState.putInt("mark1",mark1);
+        savedInstanceState.putInt("mark2",mark2);
 
     }
     @Override
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             winningPattern[0] = savedInstanceState.getString("First");
             winningPattern[1] = savedInstanceState.getString("Second");
             winningPattern[2] = savedInstanceState.getString("Third");
+            mark1 = savedInstanceState.getInt("mark1");
+            mark2 = savedInstanceState.getInt("mark2");
             System.out.println("-Win"+Arrays.toString(winningPattern));
             for (int i = 0;i < 9;i++) {
                 if (!buttonInformation[i].equals("-1")) {
@@ -92,12 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     buttons[x_cord][y_cord].setBackgroundColor(Color.YELLOW);
                 }
             }
-//            saveColoredButtonX[0] = savedInstanceState.getInt("cX1");
-//            saveColoredButtonX[1] = savedInstanceState.getInt("cX2");
-//            saveColoredButtonX[2] = savedInstanceState.getInt("cX3");
-//            saveColoredButtonY[0] = savedInstanceState.getInt("cY1");
-//            saveColoredButtonY[1] = savedInstanceState.getInt("cY2");
-//            saveColoredButtonY[2] = savedInstanceState.getInt("cY3");
         }
         resetButton.setOnClickListener(v ->
         {
@@ -106,16 +103,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.reset();
             boardGame.clear();
             resetPadMatrix();
-            if (round == 1){
-                round = 2;
-            }
-            else if (round == 2)
-            {
-                round = 1;
-            }
+            aiPlace('x');
             System.out.println("1189++"+lastClick+"");
             changeFlag(lastClick.charAt(2));
-//            role = false;
         });
         startButton.setOnClickListener(v->
         {
@@ -124,14 +114,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boardGame.clear();
             resetPadMatrix();
             if (round == 1){
+                aiPlace('x');
                 round = 2;
             }
-            else if (round == 2)
-            {
-
+            else if (round == 2){
                 round = 1;
+                flag = !flag;
+
             }
-//            role = false;
             Log.i(TAG, "Start Button Clicked");
         });
     }
@@ -151,16 +141,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void revoke() {
         boardGame = new game();
-//        p1Go = true;
         flag = !flag;
         lastClick = "-1";
 
-//        mark1 = 0;
-//        mark2 = 0;
         resetButton = findViewById(R.id.resetButton);
         startButton = findViewById(R.id.startButton);
-//        player1 = findViewById(R.id.mark1);
-//        player2 = findViewById(R.id.mark2);
+        playerX = findViewById(R.id.mark1);
+        playerO = findViewById(R.id.mark2);
         buttons[0][0] = findViewById(R.id.button00);
         buttons[0][1] = findViewById(R.id.button01);
         buttons[0][2] = findViewById(R.id.button02);
@@ -201,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void color(){
         if (boardGame.won()> 0){
             Log.d(TAG, "WINNING");
+
             String[] arr = boardGame.find(boardGame.won());
             for (int i = 0;i < 3;i++){
                 saveColoredButtonX[i] = Character.getNumericValue(arr[i].charAt(0));
@@ -208,10 +196,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 winningPattern[i] = arr[i];
                 buttons[saveColoredButtonX[i]][saveColoredButtonY[i]].setBackgroundColor(Color.YELLOW);
             }
+            if (buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].getText().toString().equals("x"))
+            {
+                playerX.setText(String.valueOf(++mark1));
+            }
+            else {
+                playerO.setText(String.valueOf(++mark2));
+
+            }
+            Toast.makeText(MainActivity.this,buttons[saveColoredButtonX[0]][saveColoredButtonY[0]].getText().toString()+ "   Won the game",
+                    Toast.LENGTH_LONG).show();
             System.out.println("& ARRAY"+Arrays.toString(buttonInformation));
             System.out.println("Winning! Matrix is"+Arrays.toString(arr));
         }
+        else{
+
             Log.d(TAG, "NOT WINNING");
+
+        }
     }
     public void aiPlace(char token){
         if (!boardGame.isGameOver()) {
@@ -220,12 +222,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int y = ranCor[1];
             putKeys(buttons[x][y], x, y, token);
             Log.d(TAG, "AI JUST PLACED A KEY AT x:"+x+"y:"+y);
-//            flag = !flag;
-
         }
         else
         {
             Log.d(TAG, "AI FAIL");
+        }
+    }
+    public void checkOver(){
+        if (boardGame.isGameOver()){
+            Toast.makeText(MainActivity.this, "Tic Tac or Tie, winner is already heighten if no then tie",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -234,15 +240,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!((Button)view).getText().toString().equals(""))
             return;
         System.out.println("Is Game over?: "+boardGame.isGameOver());
-//        System.out.println("FLG :"+p1Go);
-
         if (!boardGame.isGameOver())
         {
             System.out.println("ROUND :" + round);
             switch (view.getId()) {
                 case R.id.button00:{
                     Log.d(TAG, "00 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[0][0],0,0,'x');
                             aiPlace('o');
@@ -251,24 +254,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[0][0],0,0,'o');
                             aiPlace('x');
                         }
-                    }
-//                    else  if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//                            putKeys(buttons[0][0],0,0,'x');
-//                        }
-//                        else
-//                        {
-//                            aiPlace('x');
-//                            putKeys(buttons[0][0],0,0,'o');
-//
-//                        }
-//                    }
+                    checkOver();
+
                     break;
                 }
                 case R.id.button01:{
                     Log.d(TAG, "01 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[0][1],0,1,'x');
                             aiPlace('o');
@@ -277,24 +268,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[0][1],0,1,'o');
                             aiPlace('x');
                         }
-                    }
-//                    else{
-//                        if (flag){
-//                            aiPlace('o');
-//                            putKeys(buttons[0][1],0,1,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//                            putKeys(buttons[0][1],0,1,'o');
-//
-//                        }
-//                    }
+                    checkOver();
 
                     break;
                 }
                 case R.id.button02:{
                     Log.d(TAG, "02 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[0][2],0,2,'x');
                             aiPlace('o');
@@ -303,23 +282,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[0][2],0,2,'o');
                             aiPlace('x');
                         }
-                    }
-//                    else if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//
-//                            putKeys(buttons[0][2],0,2,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//                            putKeys(buttons[0][2],0,2,'o');
-//                        }
-//                    }
+                    checkOver();
+
                     break;
                 }
                 case R.id.button10:{
                     Log.d(TAG, "10 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[1][0],1,0,'x');
                             aiPlace('o');
@@ -328,25 +296,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[1][0],1,0,'o');
                             aiPlace('x');
                         }
+                    checkOver();
 
-                    }
-//                    else if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//                            putKeys(buttons[1][0],1,0,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//                            putKeys(buttons[1][0],1,0,'o');
-//
-//                        }
-//
-//                    }
                     break;
                 }
                 case R.id.button11:{
                     Log.d(TAG, "11 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[1][1],1,1,'x');
                             aiPlace('o');
@@ -355,24 +310,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[1][1],1,1,'o');
                             aiPlace('x');
                         }
-                    }
-//                    else if (round ==2){
-//                        if (flag){
-//                            aiPlace('o');
-//
-//                            putKeys(buttons[1][1],1,1,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//                            putKeys(buttons[1][1],1,1,'o');
-//                        }
-//                    }
+                    checkOver();
+
                     break;
                 }
                 case R.id.button12:{
 
                     Log.d(TAG, "12 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[1][2],1,2,'x');
                             aiPlace('o');
@@ -381,24 +325,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[1][2],1,2,'o');
                             aiPlace('x');
                         }
-                    }
-//                    else if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//                            putKeys(buttons[1][2],1,2,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//
-//                            putKeys(buttons[1][2],1,2,'o');
-//                        }
-//                    }
+                    checkOver();
 
                     break;
                 }
                 case R.id.button20:{
                     Log.d(TAG, "20 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[2][0],2,0,'x');
                             aiPlace('o');
@@ -407,24 +339,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[2][0],2,0,'o');
                             aiPlace('x');
                         }
-                    }
-//                    else if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//
-//                            putKeys(buttons[2][0],2,0,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//                            putKeys(buttons[2][0],2,0,'o');
-//                        }
-//                    }
+                    checkOver();
 
                     break;
                 }
                 case R.id.button21:{
                     Log.d(TAG, "21 onClick: ");
-                    if (round == 1){
                         if (flag){
                             putKeys(buttons[2][1],2,1,'x');
                             aiPlace('o');
@@ -433,26 +353,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[2][1],2,1,'o');
                             aiPlace('x');
                         }
+                    checkOver();
 
-                    }
-//                    else if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//
-//                            putKeys(buttons[2][1],2,1,'x');
-//                        }
-//                        else{
-//                            aiPlace('x');
-//
-//                            putKeys(buttons[2][1],2,1,'o');
-//                        }
-//
-//                    }
                     break;
                 }
                 case R.id.button22: {
                     Log.d(TAG, "22 onClick: ");
-                    if (round ==1){
+                //    if (round ==1){
                         if (flag){
                             putKeys(buttons[2][2],2,2,'x');
                             aiPlace('o');
@@ -461,24 +368,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             putKeys(buttons[2][2], 2, 2, 'o');
                             aiPlace('x');
                         }
-                    }
-//                    else if (round == 2){
-//                        if (flag){
-//                            aiPlace('o');
-//
-//                            putKeys(buttons[2][2],2,2,'x');
-//                        }
-//                        else {
-//                            aiPlace('x');
-//                            putKeys(buttons[2][2], 2, 2, 'o');
-//                        }
-//                    }
+                    checkOver();
+
                     break;
                 }
             }
             color();
         }
         else{
+
+
+
             System.out.println("Game is over!");
             boardGame.printBoard(boardGame.gameBoard);
         }
@@ -581,5 +481,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             a = -1;}
         return a;
     }
-
 }
